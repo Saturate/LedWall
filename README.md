@@ -1,2 +1,2 @@
-# LedWall
-A repo to store the code and PoC's of the LedWall
+# led-wall-server
+A tiny node server for displaying gifs on a led screen.

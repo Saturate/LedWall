@@ -1,0 +1,17 @@
+{
+  "name": "led-wall",
+  "version": "1.0.0",
+  "description": "Show stuff on LED wall",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "express": "^4.13.4",
+    "socket.io": "^1.4.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
