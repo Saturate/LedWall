@@ -6,7 +6,7 @@ const https = require('https');
 const chalk = require('chalk');
 const fs = require('fs');
 var bodyParser = require('body-parser');
-
+const port = 9999;
 
 var options = {
     key  : fs.readFileSync('cert.private.pem'),
@@ -19,21 +19,30 @@ const io = require('socket.io').listen(server);
 
 const imagePath = './sources/64x64';
 
-let currentImageSrc = null;
+function randomIndex(length) {
+	return Math.floor(Math.random() * (length));
+}
+
+let allFiles = fs.readdirSync(imagePath);
+var randomStartupImage = allFiles[randomIndex(allFiles.length)];
+let currentImageSrc = randomStartupImage;
+
+console.log('Randomly selected ' + randomStartupImage + ' as the starting image...' );
 
 io.on('connection', function(socket){
-	console.log('a user connected');
+	var clientIp = socket.request.connection.remoteAddress;
+	console.log('a user connected ' + clientIp);
 
 	io.emit('changeImageSrc', currentImageSrc);
 
 	socket.on('disconnect', function(){
-		console.log('user disconnected');
+		console.log('user disconnected ' + clientIp);
 	});
 
 	socket.on('changeImageSrc', function(src){
-		console.log('changeImageSrc: ' + src);
+		console.log(clientIp + ' changeImageSrc: ' + src);
 		currentImageSrc = src;
-		io.emit('changeImageSrc', src);
+		io.emit(clientIp + ' changeImageSrc', src);
 	});
 });
 
@@ -52,6 +61,6 @@ app.post('/api/nearby', function(req, res) {
     res.json({ message: 'Stern er en stjerne', recived: req.body });
 });
 
-server.listen(9999, function () {
-	console.log('LED Wall app listening on port 9999!');
+server.listen(port, function () {
+	console.log(`LED Wall app listening on port ${port}`);
 });
