@@ -16,7 +16,6 @@ var options = {
 const app = express();
 const server = https.createServer(options, app);
 const io = require('socket.io').listen(server);
-
 const imagePath = './sources/64x64';
 
 function randomIndex(length) {
@@ -42,7 +41,7 @@ io.on('connection', function(socket){
 	socket.on('changeImageSrc', function(src){
 		console.log(clientIp + ' changeImageSrc: ' + src);
 		currentImageSrc = src;
-		io.emit(clientIp + ' changeImageSrc', src);
+		io.emit('changeImageSrc', src);
 	});
 });
 
