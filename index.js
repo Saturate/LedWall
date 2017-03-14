@@ -56,6 +56,7 @@ app.get('/get-images', function (req, res) {
 	res.send(files);
 });
 
+// Sample API for Beacons implementation this needs HTTPS.
 app.post('/api/nearby', function(req, res) {
     console.log(req.body);
     res.json({ message: 'Stern er en stjerne', recived: req.body });
